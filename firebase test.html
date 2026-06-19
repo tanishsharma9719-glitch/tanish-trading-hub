@@ -1,1 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trading Dashboard</title>
 
+<style>
+body{
+margin:0;
+font-family:Segoe UI;
+display:flex;
+background:#0f172a;
+color:white;
+}
+
+/* SIDEBAR */
+.sidebar{
+width:240px;
+height:100vh;
+background:#111827;
+padding:20px;
+}
+
+.sidebar h2{
+color:#60a5fa;
+}
+
+.sidebar a{
+display:block;
+color:white;
+text-decoration:none;
+padding:10px;
+margin:6px 0;
+border-radius:8px;
+}
+
+.sidebar a:hover{
+background:#1f2937;
+}
+
+/* MAIN */
+.main{
+flex:1;
+padding:20px;
+}
+
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:15px;
+}
+
+.card{
+background:rgba(255,255,255,0.08);
+padding:20px;
+border-radius:15px;
+backdrop-filter:blur(15px);
+}
+
+.green{color:#22c55e;}
+.red{color:#ef4444;}
+.blue{color:#60a5fa;}
+
+button{
+padding:10px;
+width:100%;
+margin-top:20px;
+border:none;
+border-radius:10px;
+background:#ef4444;
+color:white;
+cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="sidebar">
+<h2>⚡ Trading Hub</h2>
+<a href="#">Dashboard</a>
+<a href="#">Signals</a>
+<a href="#">Market</a>
+<a href="#">Profile</a>
+
+<button onclick="logout()">Logout</button>
+</div>
+
+<div class="main">
+
+<h1>Welcome Trader 🚀</h1>
+
+<div class="cards">
+
+<div class="card">
+<h3 class="blue">Balance</h3>
+<p>$10,000</p>
+</div>
+
+<div class="card">
+<h3 class="green">Profit</h3>
+<p>+$1,250</p>
+</div>
+
+<div class="card">
+<h3 class="red">Loss</h3>
+<p>-$300</p>
+</div>
+
+</div>
+
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, signOut, onAuthStateChanged } 
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const firebaseConfig = {
+apiKey: "YOUR_API_KEY",
+authDomain: "YOUR_PROJECT.firebaseapp.com",
+projectId: "YOUR_PROJECT_ID",
+appId: "YOUR_APP_ID"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+// protect dashboard
+onAuthStateChanged(auth,(user)=>{
+if(!user){
+location.href="index.html";
+}
+});
+
+window.logout = async () => {
+await signOut(auth);
+location.href="index.html";
+}
+</script>
+
+</body>
+</html>
