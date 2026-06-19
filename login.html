@@ -1,0 +1,98 @@
+<!DOCTYPE html><html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login - Tanish Trading Hub</title>
+<style>
+body{
+font-family:Segoe UI,sans-serif;
+background:#0f172a;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+margin:0;
+color:white;
+}
+.box{
+background:rgba(255,255,255,.08);
+padding:25px;
+border-radius:15px;
+width:320px;
+}
+input,button{
+width:100%;
+padding:12px;
+margin:8px 0;
+border-radius:8px;
+border:none;
+}
+button{
+background:#2563eb;
+color:white;
+cursor:pointer;
+}
+#msg{
+margin-top:10px;
+}
+</style>
+</head>
+<body><div class="box">
+<h2>Tanish Trading Hub</h2><input type="email" id="email" placeholder="Email">
+<input type="password" id="password" placeholder="Password"><button onclick="signup()">Sign Up</button>
+<button onclick="login()">Login</button>
+<button onclick="resetPassword()">Forgot Password</button>
+
+<div id="msg"></div>
+</div><script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+getAuth,
+createUserWithEmailAndPassword,
+signInWithEmailAndPassword,
+sendPasswordResetEmail
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const firebaseConfig = {
+apiKey: "AIzaSyCGxeLG_nw0771oQYumnX0aIg0qVC9sCf0",
+authDomain: "tanish-trading-hub.firebaseapp.com",
+projectId: "tanish-trading-hub",
+storageBucket: "tanish-trading-hub.firebasestorage.app",
+messagingSenderId: "1041639882163",
+appId: "1:1041639882163:web:13379d970cc97ece3e9fc6",
+measurementId: "G-DY6011K767"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const msg = document.getElementById("msg");
+
+window.signup = async () => {
+try{
+await createUserWithEmailAndPassword(auth,email.value,password.value);
+msg.innerHTML="Signup Success ✅";
+}catch(e){
+msg.innerHTML=e.message;
+}
+}
+
+window.login = async () => {
+try{
+await signInWithEmailAndPassword(auth,email.value,password.value);
+msg.innerHTML="Login Success ✅";
+window.location.href="index.html";
+}catch(e){
+msg.innerHTML=e.message;
+}
+}
+
+window.resetPassword = async () => {
+try{
+await sendPasswordResetEmail(auth,email.value);
+msg.innerHTML="Reset Email Sent ✅";
+}catch(e){
+msg.innerHTML=e.message;
+}
+}
+</script></body>
+</html>
